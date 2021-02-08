@@ -9,6 +9,7 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
 scene.onOverlapTile(SpriteKind.Player, sprites.dungeon.hazardHole, function (sprite, location) {
     game.over(false)
 })
+let projectile: Sprite = null
 let mySprite: Sprite = null
 scene.setBackgroundColor(9)
 tiles.setTilemap(tilemap`level1`)
@@ -33,6 +34,27 @@ mySprite = sprites.create(img`
 tiles.placeOnTile(mySprite, tiles.getTileLocation(1, 5))
 controller.moveSprite(mySprite, 100, 0)
 scene.cameraFollowSprite(mySprite)
+game.onUpdateInterval(2000, function () {
+    projectile = sprites.createProjectileFromSide(img`
+        . . . . . . . . . . . . . . . . 
+        . . 1 1 1 1 1 . 1 1 1 1 1 . . . 
+        . 1 1 1 1 1 1 1 1 1 1 1 1 1 . . 
+        . 1 1 1 1 1 1 1 1 1 1 1 1 1 . . 
+        . 1 1 1 1 1 1 1 1 1 1 1 1 1 . . 
+        . 1 1 1 1 1 1 1 1 1 1 1 1 1 . . 
+        . 1 1 1 1 1 1 1 1 1 1 1 1 1 . . 
+        . . 1 1 1 1 1 1 1 1 1 1 1 . . . 
+        . . . . . 1 1 1 1 1 1 1 . . . . 
+        . . . . 1 1 1 1 1 1 1 1 . . . . 
+        . . . . 1 1 1 1 1 1 1 . . . . . 
+        . . . . 1 1 1 1 1 1 1 . . . . . 
+        . . . . 1 1 1 1 1 1 1 . . . . . 
+        . . . . 1 1 1 1 1 1 1 . . . . . 
+        . . . . . 1 1 1 1 1 . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        `, -20, 0)
+    projectile.y = randint(0, 60)
+})
 forever(function () {
     mySprite.ay = 400
 })
